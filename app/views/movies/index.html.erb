@@ -1,0 +1,23 @@
+<div style="text-align: center;">
+  <h1 class="title-header"><%= @title %></h1>
+  <a href=<%= user_discover_path(@user) %> class="button">Discover Page</a>
+</div>
+<br>
+<div class="table-container">
+  <table class="table">
+    <thead>
+      <tr class="tr">
+        <th class="th1">Movie Title</th>
+        <th class="th1">Vote Average</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @movies.each do |movie| %>
+        <tr class="tr">
+          <td class="td1"><%= link_to movie.title, user_movie_path(@user, movie.id) %></td>
+          <td class="td1"><%= movie.rating %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
