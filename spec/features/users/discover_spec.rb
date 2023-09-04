@@ -8,7 +8,7 @@ RSpec.describe 'User Discover Movies Page', :vcr do
     stub_request(:get, 'https://api.themoviedb.org/3/movie/top_rated')
       .with(
         query: {
-          'api_key' => ENV['MOVIE_API_KEY']
+          'api_key' => Rails.application.credentials.tmdb_movies[:key]
         }
       )
       .to_return(status: 200, body: json_response)

@@ -6,7 +6,7 @@ RSpec.describe Movie do
     stub_request(:get, 'https://api.themoviedb.org/')
       .with(
         query: {
-          'api_key' => ENV['PROPUBLICA_API_KEY'],
+          'api_key' => Rails.application.credentials.tmdb_movies[:key],
           'append_to_response' => 'reviews,credits'
         }
       )
