@@ -22,7 +22,7 @@ class MoviesService
 
   def connection
     Faraday.new('https://api.themoviedb.org/') do |faraday|
-      faraday.params['api_key'] = ENV['MOVIE_API_KEY']
+      faraday.params['api_key'] = Rails.application.credentials.tmdb_movies[:key]
     end
   end
 end
