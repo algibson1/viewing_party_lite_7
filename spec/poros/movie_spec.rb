@@ -28,7 +28,7 @@ RSpec.describe Movie do
 
   it 'has a title' do
     expect(@movie.title).to be_a(String)
-    expect(@movie.title).to eq('Das Cabinet des Dr. Caligari')
+    expect(@movie.title).to eq('The Cabinet of Dr. Caligari')
   end
 
   it 'has a rating' do
@@ -47,8 +47,12 @@ RSpec.describe Movie do
   end
 
   it 'can format genres' do
-    result = @movie.format_genres([{ id: 18, name: 'Drama' }, { id: 27, name: 'Horror' },
-                                   { id: 53, name: 'Thriller' }, { id: 80, name: 'Crime' }])
+    result = @movie.format_genres([
+      { id: 18, name: 'Drama' }, 
+      { id: 27, name: 'Horror' },
+      { id: 53, name: 'Thriller' }, 
+      { id: 80, name: 'Crime' }
+      ])
     expect(result).to eq('Drama, Horror, Thriller, Crime')
   end
 
