@@ -4,7 +4,7 @@ RSpec.describe 'Movie Details (Show) Page', :vcr do
   it 'has buttons to create a viewing party or go back to discover' do
     ally = User.create!(name: 'Ally Jean', email: 'allyjean@example.com')
     movie = MoviesFacade.new.find_movie(234)
-    visit user_movie_show_path(ally, movie.id)
+    visit user_movie_path(ally, movie.id)
 
     expect(page).to have_button('Discover Page')
     click_button('Discover Page')
@@ -14,7 +14,7 @@ RSpec.describe 'Movie Details (Show) Page', :vcr do
   it 'has a button to create a viewing party' do
     ally = User.create!(name: 'Ally Jean', email: 'allyjean@example.com')
     movie = MoviesFacade.new.find_movie(234)
-    visit user_movie_show_path(ally, movie.id)
+    visit user_movie_path(ally, movie.id)
 
     expect(page).to have_button("Create A Viewing Party For #{movie.title}")
     click_button("Create A Viewing Party For #{movie.title}")
@@ -24,7 +24,7 @@ RSpec.describe 'Movie Details (Show) Page', :vcr do
   it "has all the movie's details" do
     ally = User.create!(name: 'Ally Jean', email: 'allyjean@example.com')
     movie = MoviesFacade.new.find_movie(234)
-    visit user_movie_show_path(ally, movie.id)
+    visit user_movie_path(ally, movie.id)
 
     expect(page).to have_content(movie.title)
     expect(page).to have_content("Vote: #{movie.rating}")

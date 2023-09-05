@@ -21,7 +21,7 @@ RSpec.describe 'New Viewing Party Page', :vcr do
     expect(page).to have_content('Day')
     expect(page).to have_field(:party_date, with: Date.today)
     expect(page).to have_content('Start time')
-    expect(page).to have_field(:start_time, with: Time.now)
+    expect(page).to have_field(:start_time, with: Time.now.strftime("%H:%M"))
     expect(page).to have_button('Create Party')
   end
 
@@ -58,9 +58,17 @@ RSpec.describe 'New Viewing Party Page', :vcr do
   end
 
   it 'cannot be set to a time earlier than current time' do
-    fill_in(:start_time, with: (Time.now - 1.hours).strftime('%H:%M'))
+    fill_in(:start_time, with: (Time.now - 1.hours))
     click_button('Create Party')
     expect(page).to have_content('Error: Start time cannot be in the past')
+  end
+
+  it 'can be set to a time earlier than current time, if date is in the future' do
+    fill_in(:party_date, with: (Date.today + 1))
+    fill_in(:start_time, with: (Time.now - 1.hours))
+    click_button('Create Party')
+    expect(current_path).to eq(user_path(@ally))
+    expect(page).to have_content('Party Created Successfully')
   end
 
   it 'will show this party on the dashboard pages of invited users' do

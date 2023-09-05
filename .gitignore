@@ -35,6 +35,3 @@ spec/spec_helper.rb
 config/application.yml
 # Ignore application configuration
 /config/application.yml
-
-#Ignore fixture files
-/spec/fixtures/vcr_cassettes

@@ -1,5 +1,8 @@
 <div style="text-align: center;">
-  <h1 class="title-header"><%= @title %></h1>
+  <h1 class="title-header">
+  <%= "Top Rated Movies" if @query == 'top_rated' %>
+  <%= "Search Results for '#{@query}'" if @query != 'top_rated' %>
+  </h1>
   <a href=<%= user_discover_path(@user) %> class="button">Discover Page</a>
 </div>
 <br>
@@ -14,7 +17,7 @@
     <tbody>
       <% @movies.each do |movie| %>
         <tr class="tr">
-          <td class="td1"><%= link_to movie.title, user_movie_show_path(user_id: @user.id, movie_id: movie.id) %></td>
+          <td class="td1"><%= link_to movie.title, user_movie_path(@user, movie.id) %></td>
           <td class="td1"><%= movie.rating %></td>
         </tr>
       <% end %>

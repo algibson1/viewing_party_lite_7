@@ -9,12 +9,29 @@ RSpec.describe ViewingParty, :vcr do
     it { should validate_numericality_of :duration }
     it { should validate_presence_of :party_date } 
     it { should validate_presence_of :start_time }
+    
     it 'validates duration has a minimum value of the movie runtime' do
       User.create!(name: 'Ally Jean', email: 'allyjean@example.com')
       MoviesFacade.new.find_movie(234)
-      expect(ViewingParty.create(movie_id: 234, duration: 77, party_date: Date.today,
-                                 start_time: Time.now)).to_not be_valid
+
+      expect(ViewingParty.create(movie_id: 234, duration: 77, party_date: Date.today, start_time: Time.now.strftime("%H:%M"))).to_not be_valid
       expect(ViewingParty.create(movie_id: 234, duration: 78, party_date: Date.today, start_time: Time.now.strftime("%H:%M"))).to be_valid
+    end
+
+    it 'validates that party date is on or after today' do
+      User.create!(name: 'Ally Jean', email: 'allyjean@example.com')
+      MoviesFacade.new.find_movie(234)
+      expect(ViewingParty.create(movie_id: 234, duration: 200, party_date: (Date.today - 1), start_time: Time.now.strftime("%H:%M"))).to_not be_valid
+      expect(ViewingParty.create(movie_id: 234, duration: 200, party_date: Date.today, start_time: Time.now.strftime("%H:%M"))).to be_valid
+    end
+
+    it "validates that start time is not in the past" do
+      User.create!(name: 'Ally Jean', email: 'allyjean@example.com')
+      MoviesFacade.new.find_movie(234)
+
+      expect(ViewingParty.create(movie_id: 234, duration: 200, party_date: Date.today, start_time: (Time.now - 1.hours).strftime("%H:%M"))).to_not be_valid
+      expect(ViewingParty.create(movie_id: 234, duration: 78, party_date: Date.today, start_time: Time.now.strftime("%H:%M"))).to be_valid
+      expect(ViewingParty.create(movie_id: 234, duration: 78, party_date: (Date.today + 2), start_time: (Time.now - 1.hours).strftime("%H:%M"))).to be_valid
     end
   end
 

@@ -1,15 +1,15 @@
 <h2 style="text-align: center;">Discover Movies</h2>
 <div style="text-align: center;">
   <%= form_tag user_movies_path(@user), method: :get do %>
-    <%= hidden_field_tag :q, "top_rated" %>
+    <%= hidden_field_tag :query, "top_rated" %>
     <%= submit_tag "Find Top Rated Movies", class: "btn btn-primary", name:nil %>
   <% end %>
 </div>
 <h3 style="text-align: center;">Or</h3>
 <div style="text-align: center;">
   <%= form_tag user_movies_path(@user), method: :get, class: "movie-search-form" do %>
-    <%= label_tag :q, "Find Movies:" %>
-    <%= text_field_tag :q, params[:q] %>
+    <%= label_tag :query, "Find Movies:" %>
+    <%= text_field_tag :query, params[:query] %>
     <%= submit_tag "Search", class: "btn btn-primary", name:nil %>
   <% end %>
 </div>

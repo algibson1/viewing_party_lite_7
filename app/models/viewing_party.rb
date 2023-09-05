@@ -6,8 +6,8 @@ class ViewingParty < ApplicationRecord
   validates :duration, presence: true, numericality: true, comparison: { greater_than_or_equal_to: :movie_duration }
   validates :party_date, presence: true,
                          timeliness: { on_or_after: Date.today, type: :date, message: 'cannot be in the past' }
-  validates :start_time, presence: true,
-                         timeliness: { on_or_after: Time.now.strftime('%H:%M'), type: :time, message: 'cannot be in the past' }
+  validates :start_time, presence: true
+  validate :future_start_time
 
   def movie
     @movie ||= MoviesFacade.new.find_movie(movie_id)
@@ -43,5 +43,15 @@ class ViewingParty < ApplicationRecord
 
   def host
     users.joins(:party_guests).where('party_guests.host = ?', true).first
+  end
+
+  private
+
+  def future_start_time
+    return false if party_date.nil? || start_time.nil?
+    return true if party_date > Date.today
+    if start_time.strftime("%H:%M") < Time.now.strftime("%H:%M")
+      errors.add(:start_time, 'cannot be in the past')
+    end
   end
 end
