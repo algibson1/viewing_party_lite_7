@@ -2,25 +2,8 @@ class MoviesController < ApplicationController
   before_action :find_user, only: [:index, :show]
   
   def index
-    query = params[:query]
-
-    movies_data = if query == 'top_rated'
-                    MoviesService.new.top_rated
-                  elsif query.present?
-                    MoviesService.new.search(query)
-                  else
-                    []
-                  end
-
-    @movies = movies_data.map { |movie_data| Movie.new(movie_data) }
-    @title = if query == 'top_rated'
-               'Top Rated Movies'
-             elsif query.present?
-               "Search Results for '#{query}'"
-             else
-               'Error: No Query'
-             end
-    @movies = movies_data.map { |movie_data| Movie.new(movie_data) }
+    @query = params[:query]
+    @movies = facade.movies_list(@query)
   end
 
   def show
