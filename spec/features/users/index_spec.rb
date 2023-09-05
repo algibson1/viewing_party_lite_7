@@ -25,11 +25,11 @@ RSpec.describe 'User index page', :vcr do
 
   it 'does not display a user with a duplicate email' do
     expect do
-      User.create!(name: 'user3', email: 'user2@turing.edu')
+      User.create!(name: 'user3', email: 'user2@turing.edu', password: 'password1', password_confirmation: 'password1')
     end.to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Email has already been taken')
 
     expect do
-      User.create(name: 'user3', email: 'user2@turing.edu')
+      User.create(name: 'user3', email: 'user2@turing.edu', password: 'password1', password_confirmation: 'password1')
     end.to_not(change { User.count })
   end
 

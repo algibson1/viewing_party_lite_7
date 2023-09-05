@@ -11,7 +11,7 @@ RSpec.describe ViewingParty, :vcr do
     it { should validate_presence_of :start_time }
     
     it 'validates duration has a minimum value of the movie runtime' do
-      User.create!(name: 'Ally Jean', email: 'allyjean@example.com')
+      User.create!(name: 'Ally Jean', email: 'allyjean@example.com', password: 'password1', password_confirmation: 'password1')
       MoviesFacade.new.find_movie(234)
 
       expect(ViewingParty.create(movie_id: 234, duration: 77, party_date: Date.today, start_time: Time.now.strftime("%H:%M"))).to_not be_valid
@@ -19,14 +19,14 @@ RSpec.describe ViewingParty, :vcr do
     end
 
     it 'validates that party date is on or after today' do
-      User.create!(name: 'Ally Jean', email: 'allyjean@example.com')
+      User.create!(name: 'Ally Jean', email: 'allyjean@example.com', password: 'password1', password_confirmation: 'password1')
       MoviesFacade.new.find_movie(234)
       expect(ViewingParty.create(movie_id: 234, duration: 200, party_date: (Date.today - 1), start_time: Time.now.strftime("%H:%M"))).to_not be_valid
       expect(ViewingParty.create(movie_id: 234, duration: 200, party_date: Date.today, start_time: Time.now.strftime("%H:%M"))).to be_valid
     end
 
     it "validates that start time is not in the past" do
-      User.create!(name: 'Ally Jean', email: 'allyjean@example.com')
+      User.create!(name: 'Ally Jean', email: 'allyjean@example.com', password: 'password1', password_confirmation: 'password1')
       MoviesFacade.new.find_movie(234)
 
       expect(ViewingParty.create(movie_id: 234, duration: 200, party_date: Date.today, start_time: (Time.now - 1.hours).strftime("%H:%M"))).to_not be_valid
@@ -62,10 +62,10 @@ RSpec.describe ViewingParty, :vcr do
   it 'can send invites' do
     MoviesFacade.new.find_movie(234)
     party = ViewingParty.create!(movie_id: 234, duration: 78, party_date: Date.today, start_time: Time.now.strftime("%H:%M"))
-    ally = User.create!(name: 'Ally Jean', email: 'allyjean@example.com')
-    jimmy = User.create!(name: 'Jimmy Jean', email: 'jimmyjean@example.com')
-    bobby = User.create!(name: 'Bobby Jean', email: 'bobbyjean@example.com')
-    dennis = User.create!(name: 'Dennis Jean', email: 'dennisjean@example.com')
+    ally = User.create!(name: 'Ally Jean', email: 'allyjean@example.com', password: 'password1', password_confirmation: 'password1')
+    jimmy = User.create!(name: 'Jimmy Jean', email: 'jimmyjean@example.com', password: 'password1', password_confirmation: 'password1')
+    bobby = User.create!(name: 'Bobby Jean', email: 'bobbyjean@example.com', password: 'password1', password_confirmation: 'password1')
+    dennis = User.create!(name: 'Dennis Jean', email: 'dennisjean@example.com', password: 'password1', password_confirmation: 'password1')
 
     expect(party.users).to eq([])
 
@@ -78,10 +78,10 @@ RSpec.describe ViewingParty, :vcr do
   it 'can report the host' do
     MoviesFacade.new.find_movie(234)
     party = ViewingParty.create!(movie_id: 234, duration: 78, party_date: Date.today, start_time: Time.now.strftime("%H:%M"))
-    ally = User.create!(name: 'Ally Jean', email: 'allyjean@example.com')
-    jimmy = User.create!(name: 'Jimmy Jean', email: 'jimmyjean@example.com')
-    bobby = User.create!(name: 'Bobby Jean', email: 'bobbyjean@example.com')
-    dennis = User.create!(name: 'Dennis Jean', email: 'dennisjean@example.com')
+    ally = User.create!(name: 'Ally Jean', email: 'allyjean@example.com', password: 'password1', password_confirmation: 'password1')
+    jimmy = User.create!(name: 'Jimmy Jean', email: 'jimmyjean@example.com', password: 'password1', password_confirmation: 'password1')
+    bobby = User.create!(name: 'Bobby Jean', email: 'bobbyjean@example.com', password: 'password1', password_confirmation: 'password1')
+    dennis = User.create!(name: 'Dennis Jean', email: 'dennisjean@example.com', password: 'password1', password_confirmation: 'password1')
 
     expect(party.users).to eq([])
     party.send_invites(ally.id, { jimmy.id.to_s => '1', bobby.id.to_s => '1', dennis.id.to_s => '0' })
