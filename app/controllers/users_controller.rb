@@ -4,7 +4,8 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.includes(viewing_parties: :party_guests).find(params[:id])
+    # require 'pry'; binding.pry
+    @user = User.find(params[:id])
   end
 
   def register
