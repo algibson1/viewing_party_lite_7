@@ -1,16 +1,16 @@
 class MoviesService
   def search(keyword)
-    response = connection.get('3/search/movie') do |faraday|
+    connection.get('3/search/movie') do |faraday|
       faraday.params['query'] = keyword
     end
   end
 
   def top_rated
-    response = connection.get('3/movie/top_rated')
+    connection.get('3/movie/top_rated')
   end
 
   def find_movie(id)
-    response = connection.get("3/movie/#{id}") do |f|
+    connection.get("3/movie/#{id}") do |f|
       f.params['append_to_response'] = 'reviews,credits'
     end
   end
