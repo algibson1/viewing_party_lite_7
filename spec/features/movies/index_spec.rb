@@ -53,7 +53,6 @@ RSpec.describe 'Movies Index Page', :vcr do
       fill_in :query, with: 'The Matrix'
       click_button 'Search'
       expect(current_path).to eq(user_movies_path(@user1))
-      # expect(page).to have_content('Search Results for \'The Matrix\'')
       
       expect(all('tbody tr').count).to be <= 20
       
