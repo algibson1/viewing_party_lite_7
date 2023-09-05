@@ -1,5 +1,8 @@
 <div style="text-align: center;">
-  <h1 class="title-header"><%= @title %></h1>
+  <h1 class="title-header">
+  <%= "Top Rated Movies" if @query == 'top_rated' %>
+  <%= "Search Results for '#{@query}'" if @query != 'top_rated' %>
+  </h1>
   <a href=<%= user_discover_path(@user) %> class="button">Discover Page</a>
 </div>
 <br>
