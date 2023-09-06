@@ -1,5 +1,6 @@
 <div style="text-align: center;">
   <a href=<%= register_user_path %> class="button">Create New User</a>
+  <a href=<%= login_path %> class="button">Log In</a>
 </div>
 <br>
 <h2 style="text-align: center;">
@@ -15,7 +16,7 @@
     <tbody>
       <% @users.each do |user| %>
         <tr class="tr">
-          <td class="td1"><%= link_to user.name, user_path(user) %></td>
+          <td class="td1"><%= link_to user.name, login_path(user_id: user.id) %></td>
           <td class="td1"><%= user.email %></td>
         </tr>
       <% end %>
