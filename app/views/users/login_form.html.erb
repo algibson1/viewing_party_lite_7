@@ -1,0 +1,9 @@
+<h1>User Log In</h1>
+
+<%= form_with url: login_path, method: :post, data: {turbo: false} do |form| %>
+  <%= form.label :email %>
+  <%= form.text_field :email, value: @user&.email %>
+  <%= form.label :password %>
+  <%= form.text_field :password %>
+  <%= form.submit "Log In" %>
+<% end %>
