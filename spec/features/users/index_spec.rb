@@ -17,9 +17,9 @@ RSpec.describe 'User index page', :vcr do
 
   it 'displays a list of existing users' do
     visit(root_path)
-    expect(page).to have_content(@user1.name)
+    expect(page).to have_link(@user1.name)
     expect(page).to have_content(@user1.email)
-    expect(page).to have_content(@user2.name)
+    expect(page).to have_link(@user2.name)
     expect(page).to have_content(@user2.email)
   end
 
