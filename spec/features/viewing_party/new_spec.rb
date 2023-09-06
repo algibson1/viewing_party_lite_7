@@ -2,10 +2,10 @@ require 'rails_helper'
 
 RSpec.describe 'New Viewing Party Page', :vcr do
   before do
-    @ally = User.create!(name: 'Ally Jean', email: 'allyjean@example.com')
-    @jimmy = User.create!(name: 'Jimmy Jean', email: 'jimmyjean@example.com')
-    @bobby = User.create!(name: 'Bobby Jean', email: 'bobbyjean@example.com')
-    @dennis = User.create!(name: 'Dennis Jean', email: 'dennisjean@example.com')
+    @ally = User.create!(name: 'Ally Jean', email: 'allyjean@example.com', password: 'password1', password_confirmation: 'password1')
+    @jimmy = User.create!(name: 'Jimmy Jean', email: 'jimmyjean@example.com', password: 'password1', password_confirmation: 'password1')
+    @bobby = User.create!(name: 'Bobby Jean', email: 'bobbyjean@example.com', password: 'password1', password_confirmation: 'password1')
+    @dennis = User.create!(name: 'Dennis Jean', email: 'dennisjean@example.com', password: 'password1', password_confirmation: 'password1')
     @guests = [@jimmy, @bobby, @dennis]
     @movie = MoviesFacade.new.find_movie(234)
     visit new_user_movie_viewing_party_path(@ally, @movie.id)
@@ -58,14 +58,14 @@ RSpec.describe 'New Viewing Party Page', :vcr do
   end
 
   it 'cannot be set to a time earlier than current time' do
-    fill_in(:start_time, with: (Time.now - 1.hours))
+    fill_in(:start_time, with: (Time.now - 1.hours).strftime('%H:%M'))
     click_button('Create Party')
     expect(page).to have_content('Error: Start time cannot be in the past')
   end
 
   it 'can be set to a time earlier than current time, if date is in the future' do
     fill_in(:party_date, with: (Date.today + 1))
-    fill_in(:start_time, with: (Time.now - 1.hours))
+    fill_in(:start_time, with: (Time.now - 1.hours).strftime('%H:%M'))
     click_button('Create Party')
     expect(current_path).to eq(user_path(@ally))
     expect(page).to have_content('Party Created Successfully')

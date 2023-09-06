@@ -6,7 +6,7 @@ RSpec.describe 'User dashboard', :vcr do
   end
 
   it 'has a heading' do
-    ally = User.create!(name: 'Ally Jean', email: 'allyjean@example.com')
+    ally = User.create!(name: 'Ally Jean', email: 'allyjean@example.com', password: 'password1', password_confirmation: 'password1')
     visit user_path(ally)
     expect(page).to have_content("Ally Jean's Dashboard")
   end

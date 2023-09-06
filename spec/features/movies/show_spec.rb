@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Movie Details (Show) Page', :vcr do
   it 'has buttons to create a viewing party or go back to discover' do
-    ally = User.create!(name: 'Ally Jean', email: 'allyjean@example.com')
+    ally = User.create!(name: 'Ally Jean', email: 'allyjean@example.com', password: 'password1', password_confirmation: 'password1')
     movie = MoviesFacade.new.find_movie(234)
     visit user_movie_path(ally, movie.id)
 
@@ -12,7 +12,7 @@ RSpec.describe 'Movie Details (Show) Page', :vcr do
   end
 
   it 'has a button to create a viewing party' do
-    ally = User.create!(name: 'Ally Jean', email: 'allyjean@example.com')
+    ally = User.create!(name: 'Ally Jean', email: 'allyjean@example.com', password: 'password1', password_confirmation: 'password1')
     movie = MoviesFacade.new.find_movie(234)
     visit user_movie_path(ally, movie.id)
 
@@ -22,7 +22,7 @@ RSpec.describe 'Movie Details (Show) Page', :vcr do
   end
 
   it "has all the movie's details" do
-    ally = User.create!(name: 'Ally Jean', email: 'allyjean@example.com')
+    ally = User.create!(name: 'Ally Jean', email: 'allyjean@example.com', password: 'password1', password_confirmation: 'password1')
     movie = MoviesFacade.new.find_movie(234)
     visit user_movie_path(ally, movie.id)
 

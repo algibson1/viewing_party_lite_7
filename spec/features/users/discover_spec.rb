@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'User Discover Movies Page', :vcr do
   before do
-    @ally = User.create(name: 'user', email: 'test@example.com')
+    @ally = User.create(name: 'user', email: 'test@example.com', password: 'password1', password_confirmation: 'password1')
   end
 
   it 'links from the user dashboard' do

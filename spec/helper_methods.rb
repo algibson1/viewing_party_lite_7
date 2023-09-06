@@ -1,8 +1,8 @@
 def load_test_data
   # Create Users
-  @user1 = User.create!(name: 'user1', email: 'user1@turing.edu')
-  @user2 = User.create!(name: 'user2', email: 'user2@turing.edu')
-  @user3 = User.create(name: 'user3', email: 'user3@turing.edu')
+  @user1 = User.create!(name: 'user1', email: 'user1@turing.edu', password: 'password1', password_confirmation: 'password1')
+  @user2 = User.create!(name: 'user2', email: 'user2@turing.edu', password: 'password2', password_confirmation: 'password2')
+  @user3 = User.create(name: 'user3', email: 'user3@turing.edu', password: 'password3', password_confirmation: 'password3')
 
   # Create viewing parties
 
