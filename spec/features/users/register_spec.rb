@@ -77,10 +77,11 @@ RSpec.describe 'User register page', :vcr do
     fill_in 'Email', with: 'user4@turing.edu'
     fill_in 'Password', with: 'password'
     click_button 'Create New User'
-    expect(page).to have_content("Password confirmation can't be blank")
+
+    expect(page).to have_content("Password confirmation doesn't match Password")
   end
 
-  xit 'does not create a new user if password and confirmation are different' do
+  it 'does not create a new user if password and confirmation are different' do
     visit(register_path)
     fill_in 'Name', with: 'user4'
     fill_in 'Email', with: 'user4@turing.edu'
@@ -88,6 +89,6 @@ RSpec.describe 'User register page', :vcr do
     fill_in 'Password confirmation', with: 'password12'
     click_button 'Create New User'
 
-    expect(page).to have_content("Passwords must match")
+    expect(page).to have_content("Password confirmation doesn't match Password")
   end
 end
