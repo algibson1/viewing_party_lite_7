@@ -3,7 +3,7 @@
   <%= "Top Rated Movies" if @query == 'top_rated' %>
   <%= "Search Results for '#{@query}'" if @query != 'top_rated' %>
   </h1>
-  <a href=<%= user_discover_path(@user) %> class="button">Discover Page</a>
+  
 </div>
 <br>
 <div class="table-container">
@@ -17,7 +17,7 @@
     <tbody>
       <% @movies.each do |movie| %>
         <tr class="tr">
-          <td class="td1"><%= link_to movie.title, user_movie_path(@user, movie.id) %></td>
+          <td class="td1"><%= link_to movie.title, movie_path(movie.id) %></td>
           <td class="td1"><%= movie.rating %></td>
         </tr>
       <% end %>
