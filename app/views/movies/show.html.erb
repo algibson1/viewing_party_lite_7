@@ -1,6 +1,5 @@
 <h3><%= @movie.title %></h3>
-<%= button_to "Discover Page", user_discover_path(@user), method: :get %>
-<%= button_to "Create A Viewing Party For #{@movie.title}", new_user_movie_viewing_party_path(@user, @movie.id), method: :get %>
+<%= button_to "Create A Viewing Party For #{@movie.title}", new_movie_viewing_party_path(@movie.id), method: :get %>
 
 <p>Vote: <%= @movie.rating %></p>
 <p>Runtime: <%= @movie.format_runtime %></p>
