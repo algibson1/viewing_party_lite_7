@@ -8,10 +8,4 @@ class MoviesController < ApplicationController
   def show
     @movie = facade.find_movie(params[:id])
   end
-
-  private
-  
-  def facade
-    @facade ||= MoviesFacade.new
-  end
 end
