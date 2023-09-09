@@ -12,7 +12,7 @@ class UsersController < ApplicationController
     end
   end
 
-  def register
+  def new
     @user = User.new
   end
 
@@ -21,7 +21,7 @@ class UsersController < ApplicationController
     if new_user.save
       session[:user_id] = new_user.id 
       flash[:success] = 'Successfully registered.'
-      redirect_to user_path(new_user)
+      redirect_to dashboard_path
     else
       flash[:error] = new_user.errors.full_messages.to_sentence
       redirect_to register_path
@@ -47,10 +47,6 @@ class UsersController < ApplicationController
   def logout
     session.clear
     redirect_to root_path
-  end
-
-  def discover
-
   end
 
   private
