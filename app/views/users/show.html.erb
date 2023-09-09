@@ -1,21 +1,21 @@
 <div style="text-align: center;">
   <h2><%= @user.name %>'s Dashboard</h2>
 </div>
+
 <div id="my_parties">
   <h3>My Parties</h3>
   <% hosting_parties, invited_parties = @user.viewing_parties.partition { |party| party.party_guests.find { |pg| pg.host && pg.user_id == @user.id } } %>
   <% if invited_parties.any? %>
     <div id="invited-parties">
       <h4>Parties I'm Invited To</h4>
-      <% invited_parties.each do |party| %>
-        <%= render 'party_table', party: party, id: 'invited-parties-table' %>
-      <% end %>
-    <% end %>
-    <% if hosting_parties.any? %>
-      <div id="hosted-parties">
-        <h4>Parties I'm Hosting</h4>
-        <% hosting_parties.each do |party| %>
-          <%= render 'party_table', party: party, class: 'invited-parties-table' %>
-        <% end %>
-      <% end %>
+      <%= render 'party_table', parties: invited_parties, id: 'invited-parties-table' %><br>
     </div>
+  <% end %>
+
+  <% if hosting_parties.any? %>
+    <div id="hosted-parties">
+      <h4>Parties I'm Hosting</h4>
+      <%= render 'party_table', parties: hosting_parties, id: 'hosted-parties-table' %><br>
+    </div>
+  <% end %>
+</div>
