@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.themoviedb.org/3/movie/?api_key=43ca6fcab3f5600cad5ea1cc98408d49&append_to_response=reviews,credits
+    uri: https://api.themoviedb.org/3/movie/?api_key=<HIDDEN_KEY>&append_to_response=reviews,credits
     body:
       encoding: US-ASCII
       string: ''
@@ -25,7 +25,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Mon, 04 Sep 2023 20:45:27 GMT
+      - Sat, 09 Sep 2023 22:07:18 GMT
       Server:
       - openresty
       X-Cascade:
@@ -38,16 +38,16 @@ http_interactions:
       X-Cache:
       - Error from cloudfront
       Via:
-      - 1.1 50cc3f0b039433daebdf343a3f4489ae.cloudfront.net (CloudFront)
+      - 1.1 fb2e3e161147dc940086f9545b8e0e4a.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
       - HIO52-P1
       Alt-Svc:
       - h3=":443"; ma=86400
       X-Amz-Cf-Id:
-      - a_fdV_hSRs-60yJ4tXq_-_3il3HPnpiHmdXOFUHD7GdWumqDLHLXXw==
+      - BQY3EU7RTHcp7RwbGNblAiOLMFAv1t8Vvghz8-s1wYAOCmM1mF_Z9Q==
     body:
       encoding: ASCII-8BIT
       string: '{"success":false,"status_code":34,"status_message":"The resource you
         requested could not be found."}'
-  recorded_at: Mon, 04 Sep 2023 20:45:27 GMT
+  recorded_at: Sat, 09 Sep 2023 22:07:18 GMT
 recorded_with: VCR 6.2.0
