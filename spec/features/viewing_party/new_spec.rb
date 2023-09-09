@@ -8,7 +8,8 @@ RSpec.describe 'New Viewing Party Page', :vcr do
     @dennis = User.create!(name: 'Dennis Jean', email: 'dennisjean@example.com', password: 'password1', password_confirmation: 'password1')
     @guests = [@jimmy, @bobby, @dennis]
     @movie = MoviesFacade.new.find_movie(234)
-    visit new_user_movie_viewing_party_path(@ally, @movie.id)
+    log_in(@ally, 'password1')
+    visit new_movie_viewing_party_path(@movie.id)
   end
 
   it 'has fields: duration, date, start time, checkboxes to invite users, and a submit button' do
@@ -27,7 +28,7 @@ RSpec.describe 'New Viewing Party Page', :vcr do
 
   it 'creates a new viewing party' do
     click_button('Create Party')
-    expect(current_path).to eq(user_path(@ally))
+    expect(current_path).to eq(dashboard_path)
     expect(page).to have_content(@movie.title)
     expect(page).to have_content('Hosting')
     expect(page).to have_content('Party Created Successfully')
@@ -67,16 +68,18 @@ RSpec.describe 'New Viewing Party Page', :vcr do
     fill_in(:party_date, with: (Date.today + 1))
     fill_in(:start_time, with: (Time.now - 1.hours).strftime('%H:%M'))
     click_button('Create Party')
-    expect(current_path).to eq(user_path(@ally))
+    expect(current_path).to eq(dashboard_path)
     expect(page).to have_content('Party Created Successfully')
   end
 
   it 'will show this party on the dashboard pages of invited users' do
-    visit user_path(@jimmy)
+    log_in(@jimmy, 'password1')
+    visit dashboard_path
 
     expect(page).to_not have_content(@movie.title)
 
-    visit new_user_movie_viewing_party_path(@ally, @movie.id)
+    log_in(@ally, 'password1')
+    visit new_movie_viewing_party_path(@movie.id)
     check("_guests_#{@jimmy.id}")
     check("_guests_#{@bobby.id}")
     click_button('Create Party')
@@ -84,21 +87,25 @@ RSpec.describe 'New Viewing Party Page', :vcr do
     expect(page).to have_content(@movie.title)
     expect(page).to have_content('Hosting')
 
-    visit user_path(@jimmy)
+    log_in(@jimmy, 'password1')
+    visit dashboard_path
     expect(page).to have_content(@movie.title)
     expect(page).to have_content('Invited')
 
-    visit user_path(@bobby)
+    log_in(@bobby, 'password1')
+    visit dashboard_path
     expect(page).to have_content(@movie.title)
     expect(page).to have_content('Invited')
 
-    visit user_path(@dennis)
+    log_in(@dennis, 'password1')
+    visit dashboard_path
     expect(page).to_not have_content('Invited')
+    expect(page).to_not have_content(@movie.title)
   end
 
-  it 'has a button to return to discover page' do
-    expect(page).to have_button('Discover Page')
-    click_button('Discover Page')
-    expect(current_path).to eq(user_discover_path(@ally))
+  it 'has a link to return to discover page' do
+    expect(page).to have_link('Discover Movies')
+    click_link('Discover Movies')
+    expect(current_path).to eq(discover_path)
   end
 end
