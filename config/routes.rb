@@ -1,20 +1,17 @@
-Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+Rails.application.routes.draw do  
 
-  # Defines the root path route ("/")
-  # root "articles#index"
-  
   root 'users#index'
-  get 'login', to: 'users#login_form'
-  post 'login', to: 'users#login'
+  get '/login', to: 'users#login_form'
+  post '/login', to: 'users#login'
+  get '/logout', to: 'users#logout'
+  get '/discover', to: 'movies#index'
+  get '/dashboard', to: 'users#show'
 
-  get '/register', to: 'users#register', as: 'register_user'
+  get '/register', to: 'users#new'
   post '/register', to: 'users#create'
 
-  resources :users, only: [:show] do
-    get '/discover', to: 'users#discover'
-    resources :movies, only: [:index, :show] do
-      resources :viewing_party, only: [:new, :create]
-    end
+  resources :movies, only: [:index, :show] do
+    resources :viewing_party, only: [:new, :create]
   end
+  
 end

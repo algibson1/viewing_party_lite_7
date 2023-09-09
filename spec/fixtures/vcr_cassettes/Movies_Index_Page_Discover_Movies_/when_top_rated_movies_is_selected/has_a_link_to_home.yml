@@ -1,0 +1,62 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.themoviedb.org/3/search/movie?api_key=<HIDDEN_KEY>&query
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.7.10
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json;charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - openresty
+      X-Memc:
+      - HIT
+      X-Memc-Key:
+      - 0ad04c4a8f86817194f97d0815bf2d05
+      X-Memc-Age:
+      - '14687'
+      X-Memc-Expires:
+      - '9337'
+      Date:
+      - Sat, 09 Sep 2023 20:05:59 GMT
+      Cache-Control:
+      - public, max-age=23814
+      Etag:
+      - W/"0e23279b004381f72a34159d5c7dfd1f"
+      Vary:
+      - Accept-Encoding
+      - Origin
+      X-Cache:
+      - Hit from cloudfront
+      Via:
+      - 1.1 f3802d173009698413044360f84de06c.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - HIO52-P1
+      Alt-Svc:
+      - h3=":443"; ma=86400
+      X-Amz-Cf-Id:
+      - ePqimbLKCyuW4se3aCVmxcMn97iISnQzJxKnrrC9YrjzEFk6pIwmuA==
+      Age:
+      - '7264'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"page":1,"results":[],"total_pages":1,"total_results":0}'
+  recorded_at: Sat, 09 Sep 2023 22:07:03 GMT
+recorded_with: VCR 6.2.0

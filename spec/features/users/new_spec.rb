@@ -1,10 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'User register page', :vcr do
-  before :each do
-    load_test_data
-  end
-
+RSpec.describe 'User register page (new user)' do
   it 'displays a form to register' do
     visit(register_path)
     expect(page).to have_field('Name')
@@ -24,7 +20,8 @@ RSpec.describe 'User register page', :vcr do
     click_button 'Create New User'
 
     user = User.last 
-    expect(current_path).to eq(user_path(user))
+    expect(current_path).to eq(dashboard_path)
+    expect(page).to have_content("user4's Dashboard")
     expect(user.name).to eq('user4')
     expect(user.email).to eq('user4@turing.edu')
     expect(user.password_digest).to_not eq(nil)
@@ -36,13 +33,17 @@ RSpec.describe 'User register page', :vcr do
   end
 
   it 'does not create a new user if the email is not unique' do
+    ally = User.create(name: 'ally', email: 'test@example.com', password: 'password1', password_confirmation: 'password1')
+    expect(User.count).to eq(1)
+
     visit(register_path)
     fill_in 'Name', with: 'user4'
-    fill_in 'Email', with: @user2.email
+    fill_in 'Email', with: 'TeSt@exaMple.com'
     fill_in 'Password', with: 'password'
     fill_in 'Password confirmation', with: 'password'
     click_button 'Create New User'
     expect(page).to have_content('Email has already been taken')
+    expect(User.count).to eq(1)
   end
 
   it 'does not create a new user if the user field is blank' do

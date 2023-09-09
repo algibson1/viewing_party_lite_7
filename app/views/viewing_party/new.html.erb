@@ -1,10 +1,8 @@
 <h3>Create A Movie Party for <%= @movie.title %></h3>
 
-<%= button_to "Discover Page", user_discover_path(@user), method: :get %>
-
 <h5>Viewing Party Details</h5>
 <p>Movie Title: <%= @movie.title %></p>
-<%= form_with url: user_movie_viewing_party_index_path(@user.id, @movie.id), turbo:false do |form| %>
+<%= form_with url: movie_viewing_party_index_path(@movie.id), turbo:false do |form| %>
   <%= form.label "Duration of party" %>
   <%= form.number_field :duration, value: @movie.runtime %>
 

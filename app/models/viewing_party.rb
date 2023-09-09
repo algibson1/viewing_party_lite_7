@@ -5,7 +5,7 @@ class ViewingParty < ApplicationRecord
   validates :movie_id, presence: true
   validates :duration, presence: true, numericality: true, comparison: { greater_than_or_equal_to: :movie_duration }
   validates :party_date, presence: true,
-                         timeliness: { on_or_after: Date.today, type: :date, message: 'cannot be in the past' }
+                  timeliness: { on_or_after: Date.today, type: :date, message: 'cannot be in the past' }
   validates :start_time, presence: true
   validate :future_start_time
 
@@ -20,8 +20,6 @@ class ViewingParty < ApplicationRecord
   def movie_image
     if movie.image
       "https://image.tmdb.org/t/p/w500#{movie.image}"
-    else
-      'path/to/your/default/image.jpg'
     end
   end
 
@@ -42,7 +40,15 @@ class ViewingParty < ApplicationRecord
   end
 
   def host
-    users.joins(:party_guests).where('party_guests.host = ?', true).first
+    users.joins(:party_guests).find_by('party_guests.host = ?', true)
+  end
+
+  def invitees
+    users.joins(:party_guests).where('party_guests.host = ?', false)
+  end
+
+  def invitee_names
+    invitees.map { |invitee| invitee.name }
   end
 
   private

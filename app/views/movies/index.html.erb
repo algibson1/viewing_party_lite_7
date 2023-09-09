@@ -1,26 +1,47 @@
-<div style="text-align: center;">
-  <h1 class="title-header">
-  <%= "Top Rated Movies" if @query == 'top_rated' %>
-  <%= "Search Results for '#{@query}'" if @query != 'top_rated' %>
-  </h1>
-  <a href=<%= user_discover_path(@user) %> class="button">Discover Page</a>
-</div>
-<br>
-<div class="table-container">
-  <table class="table">
-    <thead>
-      <tr class="tr">
-        <th class="th1">Movie Title</th>
-        <th class="th1">Vote Average</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @movies.each do |movie| %>
+<% if @query.nil? %>
+  <h2 style="text-align: center;">Discover Movies</h2>
+  <div style="text-align: center;">
+    <%= form_tag movies_path, method: :get do %>
+      <%= hidden_field_tag :query, "top_rated" %>
+      <%= submit_tag "Find Top Rated Movies", class: "btn btn-primary", name:nil %>
+    <% end %>
+  </div>
+
+  <h3 style="text-align: center;">Or</h3>
+  <div style="text-align: center;">
+    <%= form_tag movies_path, method: :get, class: "movie-search-form" do %>
+      <%= label_tag :query, "Find Movies:" %>
+      <%= text_field_tag :query, params[:query] %>
+      <%= submit_tag "Search", class: "btn btn-primary", name:nil %>
+    <% end %>
+  </div>
+
+<% else %>
+  <div style="text-align: center;">
+    <h1 class="title-header">
+    <%= "Top Rated Movies" if @query == 'top_rated' %>
+    <%= "Search Results for '#{@query}'" if @query != 'top_rated' %>
+    </h1>
+  </div>
+  <br>
+
+  <div class="table-container">
+    <table class="table">
+      <thead>
         <tr class="tr">
-          <td class="td1"><%= link_to movie.title, user_movie_path(@user, movie.id) %></td>
-          <td class="td1"><%= movie.rating %></td>
+          <th class="th1">Movie Title</th>
+          <th class="th1">Vote Average</th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
-</div>
+      </thead>
+      
+      <tbody>
+        <% @movies.each do |movie| %>
+          <tr class="tr">
+            <td class="td1"><%= link_to movie.title, movie_path(movie.id) %></td>
+            <td class="td1"><%= movie.rating %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>

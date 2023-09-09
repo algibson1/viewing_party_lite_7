@@ -1,5 +1,4 @@
 class MoviesController < ApplicationController
-  before_action :find_user, only: [:index, :show]
   
   def index
     @query = params[:query]
@@ -8,14 +7,5 @@ class MoviesController < ApplicationController
 
   def show
     @movie = facade.find_movie(params[:id])
-  end
-
-  private
-  def find_user
-    @user = User.find(params[:user_id])
-  end
-
-  def facade
-    @facade ||= MoviesFacade.new
   end
 end
