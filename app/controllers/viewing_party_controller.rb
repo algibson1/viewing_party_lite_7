@@ -7,11 +7,10 @@ class ViewingPartyController < ApplicationController
   end
 
   def create
-    # Do some error handling instead?
     party = ViewingParty.new(party_params)
     if party.save
       party.send_invites(session[:user_id], guest_hash)
-      redirect_to user_path(@user)
+      redirect_to dashboard_path
       flash[:success] = 'Party Created Successfully'
     else
       redirect_to new_movie_viewing_party_path(@movie.id)
