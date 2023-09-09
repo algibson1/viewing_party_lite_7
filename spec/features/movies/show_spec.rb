@@ -1,30 +1,39 @@
 require 'rails_helper'
 
 RSpec.describe 'Movie Details (Show) Page', :vcr do
-  it 'has buttons to create a viewing party or go back to discover' do
-    ally = User.create!(name: 'Ally Jean', email: 'allyjean@example.com', password: 'password1', password_confirmation: 'password1')
+  it 'has button to go back to discover' do
     movie = MoviesFacade.new.find_movie(234)
-    visit user_movie_path(ally, movie.id)
+    visit movie_path(movie.id)
 
-    expect(page).to have_button('Discover Page')
-    click_button('Discover Page')
-    expect(current_path).to eq(user_discover_path(ally))
+    expect(page).to have_link('Discover Movies')
+    click_link('Discover Movies')
+    expect(current_path).to eq(discover_path)
   end
 
   it 'has a button to create a viewing party' do
     ally = User.create!(name: 'Ally Jean', email: 'allyjean@example.com', password: 'password1', password_confirmation: 'password1')
     movie = MoviesFacade.new.find_movie(234)
-    visit user_movie_path(ally, movie.id)
+    log_in(ally, 'password1')
+    visit movie_path(movie.id)
 
     expect(page).to have_button("Create A Viewing Party For #{movie.title}")
     click_button("Create A Viewing Party For #{movie.title}")
-    expect(current_path).to eq(new_user_movie_viewing_party_path(ally, movie.id))
+    expect(current_path).to eq(new_movie_viewing_party_path(movie.id))
+  end
+
+  it 'cannot link to create viewing party if no user is logged in' do
+    movie = MoviesFacade.new.find_movie(234)
+    visit movie_path(movie.id)
+
+    expect(page).to have_button("Create A Viewing Party For #{movie.title}")
+    click_button("Create A Viewing Party For #{movie.title}")
+    expect(current_path).to eq(movie_path(movie.id))
+    expect(page).to have_content('You must be registered and logged in to create a viewing party')
   end
 
   it "has all the movie's details" do
-    ally = User.create!(name: 'Ally Jean', email: 'allyjean@example.com', password: 'password1', password_confirmation: 'password1')
     movie = MoviesFacade.new.find_movie(234)
-    visit user_movie_path(ally, movie.id)
+    visit movie_path(movie.id)
 
     expect(page).to have_content(movie.title)
     expect(page).to have_content("Vote: #{movie.rating}")
