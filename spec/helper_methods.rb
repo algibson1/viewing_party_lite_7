@@ -22,3 +22,11 @@ def load_test_data
   PartyGuest.create!(user: @user1, viewing_party: @party2, host: false)
   PartyGuest.create!(user: @user2, viewing_party: @party2, host: false)
 end
+
+def log_in(user, password)
+  visit login_path
+
+  fill_in('Email', with: user.email)
+  fill_in('Password', with: password)
+  click_button('Log In')
+end
